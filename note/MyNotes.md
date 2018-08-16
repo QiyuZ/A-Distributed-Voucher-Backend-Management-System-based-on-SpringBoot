@@ -25,4 +25,11 @@ taskkill /f /pid PID
 ```
 PID is the number that you found. And then restart
 
+### When create a bean like HandlerInterceptor don't forget to inject it ```@Component```
+
+## How to map the database with java
+- create database and table in mysql
+- create entity in your pj
+- create DAO to map which should ```extends JpaRepository``` . That defines how to index the data
+
 #continue to update..
