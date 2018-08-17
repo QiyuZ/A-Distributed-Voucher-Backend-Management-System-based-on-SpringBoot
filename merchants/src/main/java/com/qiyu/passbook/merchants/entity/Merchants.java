@@ -3,6 +3,7 @@ package com.qiyu.passbook.merchants.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,12 +14,13 @@ import javax.persistence.Table;
 
 /**
  * <h1>merchants model</h1>
- * Column name should be same as what in merchats.sql.
+ * Column name should be same as what in merchants.sql.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Setter
 @Table(name = "merchants")
 public class Merchants {
 
@@ -51,4 +53,5 @@ public class Merchants {
     @Basic
     @Column(name = "is_audit", nullable = false)
     private Boolean isAudit = false;
+
 }
