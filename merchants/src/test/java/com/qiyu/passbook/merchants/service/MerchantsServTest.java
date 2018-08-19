@@ -1,5 +1,6 @@
 package com.qiyu.passbook.merchants.service;
 
+import com.qiyu.passbook.merchants.service.IMerchantsServ;
 import com.alibaba.fastjson.JSON;
 import com.qiyu.passbook.merchants.valueObject.CreateMerchantsRequest;
 import com.qiyu.passbook.merchants.valueObject.PassTemplate;
@@ -18,7 +19,9 @@ import java.util.Date;
  * Created by Qiyu.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(
+        classes = MerchantsServTest.class,
+        webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class MerchantsServTest {
 
     @Autowired
@@ -29,7 +32,6 @@ public class MerchantsServTest {
      * {"data":{"id":8},"errorCode":0,"errorMsg":""}
      * */
     @Test
-//    @Transactional
     public void testCreateMerchantServ() {
 
         CreateMerchantsRequest request = new CreateMerchantsRequest();
