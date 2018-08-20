@@ -5,26 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <h1>统一的错误信息</h1>
- * Created by Qinyi.
+ * <h1>error</h1>
+ * Created by Qiyu.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorInfo<T> {
 
-    /** 错误码 */
     public static final Integer ERROR = -1;
 
-    /** 特定错误码 */
+    /** specific error code*/
     private Integer code;
 
-    /** 错误信息 */
+    /** details */
     private String message;
 
-    /** 请求 url */
+    /** request for url */
     private String url;
 
-    /** 请求返回的数据 */
+    /** request for data */
     private T data;
 }
