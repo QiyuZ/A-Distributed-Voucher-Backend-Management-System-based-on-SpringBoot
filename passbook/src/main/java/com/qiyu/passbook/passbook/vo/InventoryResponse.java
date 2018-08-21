@@ -7,17 +7,17 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * <h1>库存请求响应</h1>
- * Created by Qinyi.
+ * <h1>Response of Coupon's Inventory</h1>
+ * Created by Qiyu.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class InventoryResponse {
 
-    /** 用户 id */
+    /** user id */
     private Long userId;
 
-    /** 优惠券模板信息 */
+    /** PassTemplate */
     private List<PassTemplateInfo> passTemplateInfos;
 }

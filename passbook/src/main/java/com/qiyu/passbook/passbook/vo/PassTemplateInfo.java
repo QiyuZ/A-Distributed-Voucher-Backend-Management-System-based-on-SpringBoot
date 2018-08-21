@@ -7,17 +7,17 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * <h1>优惠券模板信息</h1>
- * Created by Qinyi.
+ * <h1>coupon details</h1>
+ * Created by Qiyu.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PassTemplateInfo {
+public class PassTemplateInfo extends PassTemplate {
 
-    /** 优惠券模板 */
+    /** coupon template */
     private PassTemplate passTemplate;
 
-    /** 优惠券对应的商户 */
+    /** coupon for merchants */
     private Merchants merchants;
 }

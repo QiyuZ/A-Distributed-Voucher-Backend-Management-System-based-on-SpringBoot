@@ -37,4 +37,17 @@ PID is the number that you found. And then restart
 - Install it in setting->plugin and then add this dependency in pom.xml
 - restart IDEA and add ```@Data``` which contains both 'set' and 'get' method
 
-#continue to update..
+## 8. Difference between value object and entity in springboot
+- https://www.quora.com/What-is-the-difference-between-a-model-object-and-a-entity-in-Spring-Boot
+
+## 9. How to create a new value and store it in HBase
+- see "UserServiceImpl.java" in passbook/package com.qiyu.passbook.passbook.service.impl
+- the type in HBase is "byte", so transform value to byte array firstly
+- find corresponding column to store
+- hbaseTemplate.saveOrUpdates("table name", "data");
+
+## 10. How to search and get back a piece of data in HBase
+- see "FeedbackServiceImpl.java" in passbook/package com.qiyu.passbook.passbook.service.impl
+- "get" can just can one piece of data, so we need to scan to search all possible data 
+
+# continue to update..
