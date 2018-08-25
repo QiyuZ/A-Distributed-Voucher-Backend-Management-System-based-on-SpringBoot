@@ -9,4 +9,5 @@ There're my notes https://github.com/QiyuZ/A-Distributed-Voucher-Backend-Managem
 
 ## System architecture shows below
 
-<div align=center><img  src="https://github.com/QiyuZ/A-Distributed-Voucher-Backend-Management-System-based-on-SpringBoot/blob/master/public/Architecture.jpg"/></div>
+
+<div align=center><img  src="https://github.com/QiyuZ/A-Distributed-Voucher-Backend-Management-System-based-on-SpringBoot/blob/master/Architecture.jpg"/></div>
