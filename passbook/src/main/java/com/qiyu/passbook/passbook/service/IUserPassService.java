@@ -1,37 +1,37 @@
-package com.imooc.passbook.service;
+package com.qiyu.passbook.passbook.service;
 
-import com.imooc.passbook.vo.Pass;
-import com.imooc.passbook.vo.Response;
+import com.qiyu.passbook.passbook.vo.Pass;
+import com.qiyu.passbook.passbook.vo.Response;
 
 /**
- * <h1>获取用户个人优惠券信息</h1>
- * Created by Qinyi.
+ * <h1>get info about user's coupon</h1>
+ * Created by Qiyu.
  */
 public interface IUserPassService {
 
     /**
-     * <h2>获取用户个人优惠券信息, 即我的优惠券功能实现</h2>
-     * @param userId 用户 id
+     * <h2>coupon that can be used now</h2>
+     * @param userId  id
      * @return {@link Response}
      * */
     Response getUserPassInfo(Long userId) throws Exception;
 
     /**
-     * <h2>获取用户已经消费了的优惠券, 即已使用优惠券功能实现</h2>
-     * @param userId 用户 id
+     * <h2>coupon has been used already</h2>
+     * @param userId id
      * @return {@link Response}
      * */
     Response getUserUsedPassInfo(Long userId) throws Exception;
 
     /**
-     * <h2>获取用户所有的优惠券</h2>
-     * @param userId 用户 id
+     * <h2>all the coupon</h2>
+     * @param userId id
      * @return {@link Response}
      * */
     Response getUserAllPassInfo(Long userId) throws Exception;
 
     /**
-     * <h2>用户使用优惠券</h2>
+     * <h2>user uses coupon (action)</h2>
      * @param pass {@link Pass}
      * @return {@link Response}
      * */

@@ -1,16 +1,16 @@
-package com.imooc.passbook.service;
+package com.qiyu.passbook.passbook.service;
 
-import com.imooc.passbook.vo.Response;
+import com.qiyu.passbook.passbook.vo.Response;
 
 /**
- * <h1>获取库存信息: 只返回用户没有领取的, 即优惠券库存功能实现接口定义</h1>
- * Created by Qinyi.
+ * <h1>return inventory info: every users should see the different amount depending on whether they have used or not</h1>
+ * Created by Qiyu.
  */
 public interface IInventoryService {
 
     /**
-     * <h2>获取库存信息</h2>
-     * @param userId 用户 id
+     * <h2>inventory info</h2>
+     * @param userId  id
      * @return {@link Response}
      * */
     Response getInventoryInfo(Long userId) throws Exception;
