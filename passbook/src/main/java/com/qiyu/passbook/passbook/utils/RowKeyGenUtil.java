@@ -29,7 +29,9 @@ public class RowKeyGenUtil {
 
     /**
      * <h2>Pass RowKey = reversed(userId) + inverse(timestamp) + PassTemplate RowKey</h2>
-     *  the later one shows first
+     *  number in the back of userID is random, reversing can store the data distributed averagely in HBase
+     *  inversing let the later one shows first
+     * PassTemplate RowKey for search for info of PassTemplate in the future
      * @param request {@link GainPassTemplateRequest}
      * @return String RowKey
      * */

@@ -1,16 +1,17 @@
-package com.imooc.passbook.service.impl;
+package com.qiyu.passbook.passbook.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.imooc.passbook.constant.Constants;
-import com.imooc.passbook.constant.PassStatus;
-import com.imooc.passbook.dao.MerchantsDao;
-import com.imooc.passbook.entity.Merchants;
-import com.imooc.passbook.mapper.PassRowMapper;
-import com.imooc.passbook.service.IUserPassService;
-import com.imooc.passbook.vo.Pass;
-import com.imooc.passbook.vo.PassInfo;
-import com.imooc.passbook.vo.PassTemplate;
-import com.imooc.passbook.vo.Response;
+import com.google.gson.annotations.Since;
+import com.qiyu.passbook.passbook.constant.Constants;
+import com.qiyu.passbook.passbook.constant.PassStatus;
+import com.qiyu.passbook.passbook.dao.MerchantsDao;
+import com.qiyu.passbook.passbook.entity.Merchants;
+import com.qiyu.passbook.passbook.mapper.PassRowMapper;
+import com.qiyu.passbook.passbook.service.IUserPassService;
+import com.qiyu.passbook.passbook.vo.Pass;
+import com.qiyu.passbook.passbook.vo.PassInfo;
+import com.qiyu.passbook.passbook.vo.PassTemplate;
+import com.qiyu.passbook.passbook.vo.Response;
 import com.spring4all.spring.boot.starter.hbase.api.HbaseTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -38,14 +39,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * <h1>用户优惠券相关功能实现</h1>
- * Created by Qinyi.
+ * <h1>implement of coupon</h1>
+ * Created by Qiyu.
  */
 @Slf4j
 @Service
 public class UserPassServiceImpl implements IUserPassService {
 
-    /** Hbase 客户端 */
+    /** Hbase client */
     private final HbaseTemplate hbaseTemplate;
 
     /** Merchants Dao */
@@ -120,14 +121,14 @@ public class UserPassServiceImpl implements IUserPassService {
     }
 
     /**
-     * <h2>根据优惠券状态获取优惠券信息</h2>
-     * @param userId 用户 id
+     * <h2>get coupon info from coupon status</h2>
+     * @param userId id
      * @param status {@link PassStatus}
      * @return {@link Response}
      * */
     private Response getPassInfoByStatus(Long userId, PassStatus status) throws Exception {
 
-        // 根据 userId 构造行键前缀
+        // according to userId prefix
         byte[] rowPrefix = Bytes.toBytes(new StringBuilder(String.valueOf(userId)).reverse().toString());
 
         CompareFilter.CompareOp compareOp =
@@ -138,9 +139,9 @@ public class UserPassServiceImpl implements IUserPassService {
 
         List<Filter> filters = new ArrayList<>();
 
-        // 1. 行键前缀过滤器, 找到特定用户的优惠券
+        // 1. find coupon by user's prefix
         filters.add(new PrefixFilter(rowPrefix));
-        // 2. 基于列单元值的过滤器, 找到未使用的优惠券
+        // 2. find unused coupon by status
         if (status != PassStatus.ALL) {
             filters.add(
                     new SingleColumnValueFilter(
@@ -152,16 +153,14 @@ public class UserPassServiceImpl implements IUserPassService {
 
         scan.setFilter(new FilterList(filters));
 
-        List<Pass> passes = hbaseTemplate.find(Constants.PassTable.TABLE_NAME, scan, new PassRowMapper());
+        List<Pass> passes = hbaseTemplate.find(Constants.PassTable.TABLE_NAME, scan, new PassRowMapper()); //use scan here to get passes list
         Map<String, PassTemplate> passTemplateMap = buildPassTemplateMap(passes);
-        Map<Integer, Merchants> merchantsMap = buildMerchantsMap(
-                new ArrayList<>(passTemplateMap.values()));
+        Map<Integer, Merchants> merchantsMap = buildMerchantsMap(new ArrayList<>(passTemplateMap.values()));
 
         List<PassInfo> result = new ArrayList<>();
 
         for (Pass pass : passes) {
-            PassTemplate passTemplate = passTemplateMap.getOrDefault(
-                    pass.getTemplateId(), null);
+            PassTemplate passTemplate = passTemplateMap.getOrDefault(pass.getTemplateId(), null);
             if (null == passTemplate) {
                 log.error("PassTemplate Null : {}", pass.getTemplateId());
                 continue;
@@ -180,12 +179,11 @@ public class UserPassServiceImpl implements IUserPassService {
     }
 
     /**
-     * <h2>通过获取的 Passes 对象构造 Map</h2>
+     * <h2>build map through passes</h2>
      * @param passes {@link Pass}
      * @return Map {@link PassTemplate}
      * */
-    private
-    Map<String, PassTemplate> buildPassTemplateMap(List<Pass> passes) throws Exception {
+    private Map<String, PassTemplate> buildPassTemplateMap(List<Pass> passes) throws Exception {
 
         String[] patterns = new String[] {"yyyy-MM-dd"};
 
@@ -203,7 +201,7 @@ public class UserPassServiceImpl implements IUserPassService {
         byte[] END = Bytes.toBytes(Constants.PassTemplateTable.END);
 
         List<String> templateIds = passes.stream().map(
-                Pass::getTemplateId
+                Pass:: getTemplateId //map's function to get
         ).collect(Collectors.toList());
 
         List<Get> templateGets = new ArrayList<>(templateIds.size());
@@ -213,7 +211,7 @@ public class UserPassServiceImpl implements IUserPassService {
                 .getTable(TableName.valueOf(Constants.PassTemplateTable.TABLE_NAME))
                 .get(templateGets);
 
-        // 构造 PassTemplateId -> PassTemplate Object 的 Map, 用于构造 PassInfo
+        // build map of PassTemplateId -> PassTemplate Object, for building PassInfo
         Map<String, PassTemplate> templateId2Object = new HashMap<>();
         for (Result item : templateResults) {
             PassTemplate passTemplate = new PassTemplate();
@@ -239,12 +237,11 @@ public class UserPassServiceImpl implements IUserPassService {
     }
 
     /**
-     * <h2>通过获取的 PassTemplate 对象构造 Merchants Map</h2>
+     * <h2>from PassTemplate to build Merchants Map</h2>
      * @param passTemplates {@link PassTemplate}
      * @return {@link Merchants}
      * */
-    private
-    Map<Integer, Merchants> buildMerchantsMap(List<PassTemplate> passTemplates) {
+    private Map<Integer, Merchants> buildMerchantsMap(List<PassTemplate> passTemplates) { //Integer is UserID
 
         Map<Integer, Merchants> merchantsMap = new HashMap<>();
         List<Integer> merchantsIds = passTemplates.stream().map(

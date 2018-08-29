@@ -50,4 +50,7 @@ PID is the number that you found. And then restart
 - see "FeedbackServiceImpl.java" in passbook/package com.qiyu.passbook.passbook.service.impl
 - "get" can just can one piece of data, so we need to scan to search all possible data 
 
+## 11. Can not use some functions, saying under language 1.6 but actually you are using a higher version
+- https://stackoverflow.com/questions/22703412/java-lambda-expressions-not-supported-at-this-language-level
+
 # continue to update..
